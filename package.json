@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {"node": "16.6.0"},
   "scripts": {
     "test": "tsc && node -r dotenv/config index.js",
     "start": "tsc && node index.js & node keepAlive.js",
