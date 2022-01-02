@@ -2,11 +2,9 @@ import fs from "fs"
 import {REST} from "@discordjs/rest"
 import {RESTPostAPIApplicationCommandsJSONBody, Routes} from "discord-api-types/v9"
 import {ApiGuildApplicationCommandPermissionData, Command} from "./typings/command"
-import dotenv from "dotenv"
 import {config} from "./config"
 import {ApplicationCommandPermissionData, GuildApplicationCommandPermissionData} from "discord.js"
 
-dotenv.config()
 const clientId = config.clientId
 const token = process.env.token
 const guildId = config.guildId

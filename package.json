@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "engines": {"node": "16.6.0"},
+  "engines": {"node": "16.x"},
   "scripts": {
     "test": "tsc && node -r dotenv/config index.js",
-    "start": "tsc && node index.js & node keepAlive.js",
-    "deploy": "tsc && node deploy-commands.js"
+    "start": "tsc && node -r dotenv/config index.js & node -r dotenv/config keepAlive.js",
+    "deploy": "tsc && node -r dotenv/config deploy-commands.js"
   },
   "author": "",
   "license": "ISC",
