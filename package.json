@@ -15,8 +15,7 @@
     "@types/lodash": "^4.14.178",
     "@typescript-eslint/eslint-plugin": "^5.8.1",
     "@typescript-eslint/parser": "^5.8.1",
-    "eslint": "^8.5.0",
-    "typescript": "^4.5.4"
+    "eslint": "^8.5.0"
   },
   "dependencies": {
     "@discordjs/builders": "^0.11.0",
@@ -27,6 +26,7 @@
     "lodash": "^4.17.21",
     "noblox.js": "^4.12.0",
     "node-json-file-storage": "github:longlinh123456/node-json-file-storage",
-    "ts-retry": "^2.3.9"
+    "ts-retry": "^2.3.9",
+    "typescript": "^4.5.4"
   }
 }
