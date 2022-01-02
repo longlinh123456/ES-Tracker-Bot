@@ -27,7 +27,7 @@ const discord_js_1 = require("discord.js");
 const config_1 = require("./config");
 const tracker_1 = require("./tracker/tracker");
 (async () => {
-    const token = process.env.token;
+    const token = process.env.TOKEN;
     const client = new discord_js_1.Client({ intents: [discord_js_1.Intents.FLAGS.GUILDS] });
     client.commands = new discord_js_1.Collection();
     const commandFiles = fs_1.default.readdirSync("./commands").filter(file => file.endsWith(".js"));

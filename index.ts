@@ -5,7 +5,7 @@ import {Command} from "./typings/command"
 import {config} from "./config"
 import {tracker} from "./tracker/tracker"
 (async() => {
-	const token = process.env.token
+	const token = process.env.TOKEN
 	const client = new Client({intents: [Intents.FLAGS.GUILDS]}) as ClientWithCommands
 	
 	client.commands = new Collection<string, Command>()

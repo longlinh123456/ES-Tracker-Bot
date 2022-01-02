@@ -6,7 +6,7 @@ import {IDStore} from "./idStore/store"
 import {DescriptionStore} from "./idDescriptionStore/store"
 import {config} from "../config"
 import {TextChannel} from "discord.js"
-if (process.env.cookie) noblox.setCookie(process.env.cookie)
+if (process.env.COOKIE) noblox.setCookie(process.env.COOKIE)
 async function getServers(gameId: number): Promise<GameInstance[]> {
 	const servers: GameInstance[] = []
 	let currentServerIndex = 0

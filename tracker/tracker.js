@@ -29,8 +29,8 @@ const lodash_1 = __importDefault(require("lodash"));
 const store_1 = require("./idStore/store");
 const store_2 = require("./idDescriptionStore/store");
 const config_1 = require("../config");
-if (process.env.cookie)
-    noblox_js_1.default.setCookie(process.env.cookie);
+if (process.env.COOKIE)
+    noblox_js_1.default.setCookie(process.env.COOKIE);
 async function getServers(gameId) {
     const servers = [];
     let currentServerIndex = 0;

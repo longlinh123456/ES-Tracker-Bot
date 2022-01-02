@@ -6,7 +6,7 @@ import {config} from "./config"
 import {ApplicationCommandPermissionData, GuildApplicationCommandPermissionData} from "discord.js"
 
 const clientId = config.clientId
-const token = process.env.token
+const token = process.env.TOKEN
 const guildId = config.guildId
 
 const commandPermissions: Record<string, ApplicationCommandPermissionData[]> = {}
