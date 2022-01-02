@@ -1,6 +1,6 @@
 {
 	"extends": "@tsconfig/node14/tsconfig.json",
-	"files": ["index.ts", "deploy-commands.ts"],
+	"files": ["index.ts", "deploy-commands.ts", "keepAlive.ts"],
 	"include": ["typings", "commands"],
 	"exclude": ["node_modules"],
 	"compilerOptions": {
