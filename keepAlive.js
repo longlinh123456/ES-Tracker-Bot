@@ -5,8 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const app = (0, express_1.default)();
-const listener = app.listen(process.env.PORT, function () {
-    console.log(`Your app is listening on port ${process.env.PORT}`);
+const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
+const listener = app.listen(port, function () {
+    console.log(`Your app is listening on port ${port}`);
 });
 app.get("/keepalive", (req, res) => res.sendStatus(200));
 process.on("SIGINT", () => {
