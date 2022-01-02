@@ -25,6 +25,6 @@ exports.config = {
         };
     },
     gameId: 2262441883,
-    checkInterval: 0.5 * 60 * 1000,
+    checkInterval: 1.5 * 60 * 1000,
     notifyCooldown: 10 * 60 * 1000 // in ms
 };
