@@ -57,7 +57,7 @@ export const command: Command = {
 				embeds: [config.defaultEmbed().setDescription("Tier must be in the range of 1-20!").setColor("RED")],
 				ephemeral: true
 			})
-			IDStore.update(targetId, tier)
+			await IDStore.update(targetId, tier)
 			interaction.reply(config.defaultEmbedMessage(`Target ${targetId} updated in the tracker!`, true))
 		}
 		else if (interaction.options.getSubcommand() === "description") {
@@ -67,7 +67,7 @@ export const command: Command = {
 				embeds: [config.defaultEmbed().setDescription("Tier must be in the range of 1-20!")],
 				ephemeral: true
 			})
-			DescriptionStore.update(tier, description)
+			await DescriptionStore.update(tier, description)
 			interaction.reply(config.defaultEmbedMessage(`Tier ${tier}'s description updated in the tracker!`, true))
 		}
 	},

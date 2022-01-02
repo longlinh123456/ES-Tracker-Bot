@@ -1,24 +1,28 @@
 import JSONFileStorage from "node-json-file-storage"
 import {TierDescription} from "../../typings/tiers"
-const storage = new JSONFileStorage("./idDescriptionStore.json")
+import fs from "fs"
+fs.mkdir("./.data", {recursive: true}, () => {
+	console.log("already made .data folder")
+})
+const storage = new JSONFileStorage("./.data/idDescriptionStore.json")
 export class DescriptionStore {
-	static update(tier: number, description: string): void {
+	static async update(tier: number, description: string): Promise<void> {
 		storage.put({
 			id: tier,
 			description: description
 		})
 	}
-	static remove(tier: number): void {
-		if (this.get(tier)) storage.remove(tier)
+	static async remove(tier: number): Promise<void> {
+		if (await this.get(tier)) storage.remove(tier)
 		else throw "You can't remove a non-existent description!"
 	}
-	static get(tier?: number): string | void {
+	static async get(tier?: number): Promise<string | void> {
 		if (typeof tier === "number") {
 			return storage.get(tier).description
 		}
 		else return
 	}
-	static getAll(): Record<number, string> {
+	static async getAll(): Promise<Record<number, string>> {
 		const returnedDescriptions: Record<number, string> = {}
 		const db: Record<string, TierDescription> = storage.all()
 		for (const tier in db) {
@@ -26,7 +30,7 @@ export class DescriptionStore {
 		}
 		return returnedDescriptions
 	}
-	static clear(): void {
+	static async clear(): Promise<void> {
 		storage.clear()
 	}
 }

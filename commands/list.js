@@ -23,9 +23,9 @@ exports.command = {
         var _a;
         await interaction.deferReply({ ephemeral: true });
         const list = {};
-        const descriptionList = store_2.DescriptionStore.getAll();
+        const descriptionList = await store_2.DescriptionStore.getAll();
         const processedList = [];
-        for (const target of store_1.IDStore.getAll()) {
+        for (const target of await store_1.IDStore.getAll()) {
             list[_a = target.tier] ?? (list[_a] = []);
             list[target.tier].push(target.userId);
         }

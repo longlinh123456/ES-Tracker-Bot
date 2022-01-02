@@ -19,9 +19,9 @@ export const command: Command = {
 	async execute(interaction: CommandInteraction) {
 		await interaction.deferReply({ephemeral: true})
 		const list: Record<number, number[]> = {}
-		const descriptionList = DescriptionStore.getAll()
+		const descriptionList = await DescriptionStore.getAll()
 		const processedList: EmbedFieldData[] = []
-		for (const target of IDStore.getAll()) {
+		for (const target of await IDStore.getAll()) {
 			list[target.tier] ??= []
 			list[target.tier].push(target.userId)
 		}

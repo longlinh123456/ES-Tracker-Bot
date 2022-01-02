@@ -5,21 +5,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.IDStore = void 0;
 const node_json_file_storage_1 = __importDefault(require("node-json-file-storage"));
-const storage = new node_json_file_storage_1.default("./idStore.json");
+const fs_1 = __importDefault(require("fs"));
+fs_1.default.mkdir("./.data", { recursive: true }, () => {
+    console.log("already made .data folder");
+});
+const storage = new node_json_file_storage_1.default("./.data/idStore.json");
 class IDStore {
-    static update(userId, tier) {
+    static async update(userId, tier) {
         storage.put({
             id: userId,
             tier: tier
         });
     }
-    static remove(userId) {
-        if (this.get(userId))
+    static async remove(userId) {
+        if (await this.get(userId))
             storage.remove(userId);
         else
             throw "You can't remove a non-existent target!";
     }
-    static get(userId) {
+    static async get(userId) {
         if (typeof userId === "number") {
             const target = storage.get(userId);
             return {
@@ -30,7 +34,7 @@ class IDStore {
         else
             return;
     }
-    static getAll() {
+    static async getAll() {
         const db = storage.all();
         const returnedList = [];
         for (const id in db) {
@@ -41,11 +45,11 @@ class IDStore {
         }
         return returnedList;
     }
-    static clear() {
+    static async clear() {
         storage.clear();
     }
-    static clearTier(tier) {
-        const db = this.getAll();
+    static async clearTier(tier) {
+        const db = await this.getAll();
         const sortedDB = {};
         sortedDB[tier] = [];
         for (const target of db) {

@@ -33,11 +33,11 @@ export const command: Command = {
 		) as SlashCommandBuilder,
 	async execute(interaction: CommandInteraction) {
 		if (interaction.options.getSubcommand() === "targets") {
-			IDStore.clear()
+			await IDStore.clear()
 			return interaction.reply(config.defaultEmbedMessage("Target list cleared!", true))
 		}
 		else if (interaction.options.getSubcommand() === "descriptions") {
-			DescriptionStore.clear()
+			await DescriptionStore.clear()
 			return interaction.reply(config.defaultEmbedMessage("Tier description list cleared!", true))
 		}
 		else if (interaction.options.getSubcommand() === "tier") {
@@ -46,7 +46,7 @@ export const command: Command = {
 				embeds: [config.defaultEmbed().setDescription("Tier must be in the range of 1-20!").setColor("RED")],
 				ephemeral: true
 			})
-			IDStore.clearTier(tier)
+			await IDStore.clearTier(tier)
 			return interaction.reply(config.defaultEmbedMessage(`Targets in tier ${tier} cleared!`, true))
 		}
 	}

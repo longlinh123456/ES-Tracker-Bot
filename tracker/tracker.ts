@@ -6,6 +6,7 @@ import {IDStore} from "./idStore/store"
 import {DescriptionStore} from "./idDescriptionStore/store"
 import {config} from "../config"
 import {TextChannel} from "discord.js"
+import {ReturnedTarget} from "../typings/target"
 if (process.env.COOKIE) noblox.setCookie(process.env.COOKIE)
 async function getServers(gameId: number): Promise<GameInstance[]> {
 	const servers: GameInstance[] = []
@@ -57,9 +58,9 @@ export async function tracker(client: ClientWithCommands) {
 
 async function trackerCycle(client: ClientWithCommands, lastNotified: Record<number, number>) {
 	(client.channels.cache.get(config.channelId) as TextChannel).bulkDelete(100)
-	const idDB: Record<number, number> = {}
-	IDStore.getAll().forEach(target => idDB[target.userId] = target.tier)
-	const descriptionDB = DescriptionStore.getAll()
+	const idDB: Record<number, number> = {};
+	(await IDStore.getAll()).forEach((target: ReturnedTarget) => idDB[target.userId] = target.tier)
+	const descriptionDB = await DescriptionStore.getAll()
 	const trackedIds = _.keys(idDB).map(id => Number(id))
 	if (trackedIds.length > 0) {
 		const activePlayersAndServerIds = await findPlayersInServers(trackedIds, config.gameId)

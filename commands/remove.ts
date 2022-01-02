@@ -41,7 +41,7 @@ export const command: Command = {
 				ephemeral: true
 			})
 			try {
-				IDStore.remove(targetId)
+				await IDStore.remove(targetId)
 				return interaction.reply(config.defaultEmbedMessage(`Target ${targetId} removed from the tracker!`, true))
 			}
 			catch (message) {
@@ -55,7 +55,7 @@ export const command: Command = {
 				ephemeral: true
 			})
 			try {
-				DescriptionStore.remove(tier)
+				await DescriptionStore.remove(tier)
 				return interaction.reply(config.defaultEmbedMessage(`Description of tier ${tier} removed from the tracker!`, true))
 			}
 			catch (message) {

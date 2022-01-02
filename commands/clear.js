@@ -32,11 +32,11 @@ exports.command = {
         .setMaxValue(20))),
     async execute(interaction) {
         if (interaction.options.getSubcommand() === "targets") {
-            store_1.IDStore.clear();
+            await store_1.IDStore.clear();
             return interaction.reply(config_1.config.defaultEmbedMessage("Target list cleared!", true));
         }
         else if (interaction.options.getSubcommand() === "descriptions") {
-            store_2.DescriptionStore.clear();
+            await store_2.DescriptionStore.clear();
             return interaction.reply(config_1.config.defaultEmbedMessage("Tier description list cleared!", true));
         }
         else if (interaction.options.getSubcommand() === "tier") {
@@ -46,7 +46,7 @@ exports.command = {
                     embeds: [config_1.config.defaultEmbed().setDescription("Tier must be in the range of 1-20!").setColor("RED")],
                     ephemeral: true
                 });
-            store_1.IDStore.clearTier(tier);
+            await store_1.IDStore.clearTier(tier);
             return interaction.reply(config_1.config.defaultEmbedMessage(`Targets in tier ${tier} cleared!`, true));
         }
     }

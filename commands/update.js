@@ -52,7 +52,7 @@ exports.command = {
                     embeds: [config_1.config.defaultEmbed().setDescription("Tier must be in the range of 1-20!").setColor("RED")],
                     ephemeral: true
                 });
-            store_1.IDStore.update(targetId, tier);
+            await store_1.IDStore.update(targetId, tier);
             interaction.reply(config_1.config.defaultEmbedMessage(`Target ${targetId} updated in the tracker!`, true));
         }
         else if (interaction.options.getSubcommand() === "description") {
@@ -63,7 +63,7 @@ exports.command = {
                     embeds: [config_1.config.defaultEmbed().setDescription("Tier must be in the range of 1-20!")],
                     ephemeral: true
                 });
-            store_2.DescriptionStore.update(tier, description);
+            await store_2.DescriptionStore.update(tier, description);
             interaction.reply(config_1.config.defaultEmbedMessage(`Tier ${tier}'s description updated in the tracker!`, true));
         }
     },

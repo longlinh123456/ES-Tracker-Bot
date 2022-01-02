@@ -82,8 +82,8 @@ exports.tracker = tracker;
 async function trackerCycle(client, lastNotified) {
     client.channels.cache.get(config_1.config.channelId).bulkDelete(100);
     const idDB = {};
-    store_1.IDStore.getAll().forEach(target => idDB[target.userId] = target.tier);
-    const descriptionDB = store_2.DescriptionStore.getAll();
+    (await store_1.IDStore.getAll()).forEach((target) => idDB[target.userId] = target.tier);
+    const descriptionDB = await store_2.DescriptionStore.getAll();
     const trackedIds = lodash_1.default.keys(idDB).map(id => Number(id));
     if (trackedIds.length > 0) {
         const activePlayersAndServerIds = await findPlayersInServers(trackedIds, config_1.config.gameId);
