@@ -85,37 +85,43 @@ async function trackerCycle(client, lastNotified) {
     store_1.IDStore.getAll().forEach(target => idDB[target.userId] = target.tier);
     const descriptionDB = store_2.DescriptionStore.getAll();
     const trackedIds = lodash_1.default.keys(idDB).map(id => Number(id));
-    const activePlayersAndServerIds = await findPlayersInServers(trackedIds, config_1.config.gameId);
-    for (const userId in activePlayersAndServerIds) {
-        lastNotified[userId] ?? (lastNotified[userId] = 0);
-        let pingContent;
-        if (Date.now() - lastNotified[userId] >= config_1.config.notifyCooldown)
-            pingContent = `<@&${config_1.config.roleId}>`;
-        await client.channels.cache.get(config_1.config.channelId).send({
-            content: pingContent,
-            embeds: [
-                config_1.config.defaultEmbed()
-                    .setTitle(`Target ${await tsRetry.retryAsync(() => noblox_js_1.default.getUsernameFromId(parseInt(userId)), {
-                    delay: 1000,
-                    maxTry: 5
-                })} at Tier ${idDB[userId]} (${descriptionDB[idDB[userId]]}) detected!`)
-                    .setURL(`https://www.roblox.com/users/${userId}/profile`)
-                    .setImage((await tsRetry.retryAsync(() => noblox_js_1.default.getPlayerThumbnail(parseInt(userId), 180, "png", false, "body"), {
-                    delay: 1000,
-                    maxTry: 5
-                }))[0].imageUrl)
-                    .addFields({ name: "User ID", value: userId, inline: true }, {
-                    name: "Account Age", value: `${String(await tsRetry.retryAsync(async () => (await noblox_js_1.default.getPlayerInfo(parseInt(userId))).age, {
+    if (trackedIds.length > 0) {
+        const activePlayersAndServerIds = await findPlayersInServers(trackedIds, config_1.config.gameId);
+        for (const userId in activePlayersAndServerIds) {
+            lastNotified[userId] ?? (lastNotified[userId] = 0);
+            let pingContent;
+            if (Date.now() - lastNotified[userId] >= config_1.config.notifyCooldown)
+                pingContent = `<@&${config_1.config.roleId}>`;
+            await client.channels.cache.get(config_1.config.channelId).send({
+                content: pingContent,
+                embeds: [
+                    config_1.config.defaultEmbed()
+                        .setTitle(`Target ${await tsRetry.retryAsync(() => noblox_js_1.default.getUsernameFromId(parseInt(userId)), {
                         delay: 1000,
                         maxTry: 5
-                    }))} days`,
-                    inline: true
-                }, { name: "Gamepasses", value: `https://www.roblox.com/users/${userId}/inventory#!/game-passes`, inline: true }, { name: "Server Join Link", value: `https://www.roblox.com/home?placeId=${config_1.config.gameId}&gameId=${activePlayersAndServerIds[userId]}` })
-            ]
-        });
-        lastNotified[userId] = Date.now();
+                    })} at Tier ${idDB[userId]} (${descriptionDB[idDB[userId]]}) detected!`)
+                        .setURL(`https://www.roblox.com/users/${userId}/profile`)
+                        .setImage((await tsRetry.retryAsync(() => noblox_js_1.default.getPlayerThumbnail(parseInt(userId), 180, "png", false, "body"), {
+                        delay: 1000,
+                        maxTry: 5
+                    }))[0].imageUrl)
+                        .addFields({ name: "User ID", value: userId, inline: true }, {
+                        name: "Account Age", value: `${String(await tsRetry.retryAsync(async () => (await noblox_js_1.default.getPlayerInfo(parseInt(userId))).age, {
+                            delay: 1000,
+                            maxTry: 5
+                        }))} days`,
+                        inline: true
+                    }, { name: "Gamepasses", value: `https://www.roblox.com/users/${userId}/inventory#!/game-passes`, inline: true }, { name: "Server Join Link", value: `https://www.roblox.com/home?placeId=${config_1.config.gameId}&gameId=${activePlayersAndServerIds[userId]}` })
+                ]
+            });
+            lastNotified[userId] = Date.now();
+        }
+        if (lodash_1.default.keys(activePlayersAndServerIds).length === 0)
+            await client.channels.cache.get(config_1.config.channelId).send(config_1.config.defaultEmbedMessage("No targets detected for this check cycle!"));
+        return lastNotified;
     }
-    if (lodash_1.default.keys(activePlayersAndServerIds).length === 0)
-        await client.channels.cache.get(config_1.config.channelId).send(config_1.config.defaultEmbedMessage("No targets detected for this check cycle!"));
-    return lastNotified;
+    else {
+        await client.channels.cache.get(config_1.config.channelId).send(config_1.config.defaultEmbedMessage("No targets to check for this check cycle!"));
+        return lastNotified;
+    }
 }

@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DescriptionStore = void 0;
 const node_json_file_storage_1 = __importDefault(require("node-json-file-storage"));
-const storage = new node_json_file_storage_1.default("./.data/idDescriptionStore.json");
+const storage = new node_json_file_storage_1.default("./idDescriptionStore.json");
 class DescriptionStore {
     static update(tier, description) {
         storage.put({

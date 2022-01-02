@@ -38,7 +38,7 @@ const tracker_1 = require("./tracker/tracker");
     client.once("ready", () => {
         console.log("Ready!");
         try {
-            (0, tracker_1.tracker)(client);
+            tracker_1.tracker(client);
         }
         catch (error) {
             console.log(error);
