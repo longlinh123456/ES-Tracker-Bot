@@ -119,3 +119,7 @@ dist
 
 # visual studio folder
 .vs/*
+
+# stores
+idDescriptionStore.json
+idStore.json
