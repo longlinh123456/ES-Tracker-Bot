@@ -1,0 +1,32 @@
+{
+  "name": "es-tracker-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "tsc && node -r dotenv/config index.js",
+    "start": "tsc && node index.js",
+    "deploy": "tsc && node deploy-commands.js "
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@tsconfig/node14": "^1.0.1",
+    "@types/lodash": "^4.14.178",
+    "@typescript-eslint/eslint-plugin": "^5.8.1",
+    "@typescript-eslint/parser": "^5.8.1",
+    "eslint": "^8.5.0",
+    "typescript": "^4.5.4"
+  },
+  "dependencies": {
+    "@discordjs/builders": "^0.11.0",
+    "@discordjs/rest": "^0.2.0-canary.0",
+    "discord-api-types": "^0.26.0",
+    "discord.js": "^13.5.0",
+    "dotenv": "^10.0.0",
+    "lodash": "^4.17.21",
+    "noblox.js": "^4.12.0",
+    "node-json-file-storage": "github:longlinh123456/node-json-file-storage",
+    "ts-retry": "^2.3.9"
+  }
+}
