@@ -1,6 +1,6 @@
 import JSONFileStorage from "node-json-file-storage"
 import {TierDescription} from "../../typings/tiers"
-const storage = new JSONFileStorage("./idDescriptionStore.json")
+const storage = new JSONFileStorage("./.data/idDescriptionStore.json")
 export class DescriptionStore {
 	static update(tier: number, description: string): void {
 		storage.put({

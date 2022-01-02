@@ -1,6 +1,6 @@
 import JSONFileStorage from "node-json-file-storage"
 import {ReturnedTarget, Target} from "../../typings/target"
-const storage = new JSONFileStorage("./idStore.json")
+const storage = new JSONFileStorage("./.data/idStore.json")
 export class IDStore {
 	static update(userId: number, tier: number): void {
 		storage.put({
