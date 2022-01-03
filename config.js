@@ -6,7 +6,8 @@ exports.config = {
     guildId: "926139718851256351",
     clientId: "926088136310808606",
     channelId: "926872409737420800",
-    roleId: "926871029706539069",
+    pingRoleId: "926871029706539069",
+    managerRoleId: "",
     defaultEmbed() {
         return new discord_js_1.MessageEmbed()
             .setColor("BLUE")

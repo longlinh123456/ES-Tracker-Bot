@@ -7,7 +7,7 @@ const store_2 = require("../tracker/idDescriptionStore/store");
 const config_1 = require("../config");
 exports.command = {
     permissions: [{
-            id: "926439540355387452",
+            id: config_1.config.managerRoleId,
             type: "ROLE",
             permission: true
         }],

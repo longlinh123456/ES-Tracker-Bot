@@ -11,7 +11,7 @@ const config_1 = require("../config");
 const noblox_js_1 = __importDefault(require("noblox.js"));
 exports.command = {
     permissions: [{
-            id: "926439540355387452",
+            id: config_1.config.managerRoleId,
             type: "ROLE",
             permission: true
         }],

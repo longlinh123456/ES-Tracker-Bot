@@ -91,7 +91,7 @@ async function trackerCycle(client, lastNotified) {
             lastNotified[userId] ?? (lastNotified[userId] = 0);
             let pingContent;
             if (Date.now() - lastNotified[userId] >= config_1.config.notifyCooldown)
-                pingContent = `<@&${config_1.config.roleId}>`;
+                pingContent = `<@&${config_1.config.pingRoleId}>`;
             await client.channels.cache.get(config_1.config.channelId).send({
                 content: pingContent,
                 embeds: [
