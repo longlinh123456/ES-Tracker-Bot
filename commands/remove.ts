@@ -6,7 +6,7 @@ import {DescriptionStore} from "../tracker/idDescriptionStore/store"
 import {config} from "../config"
 export const command: Command = {
 	permissions: [{
-		id: "926439540355387452",
+		id: config.managerRoleId,
 		type: "ROLE",
 		permission: true
 	}],

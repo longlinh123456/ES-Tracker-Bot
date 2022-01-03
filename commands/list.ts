@@ -8,7 +8,7 @@ import {APIEmbed} from "discord-api-types"
 import noblox from "noblox.js"
 export const command: Command = {
 	permissions: [{
-		id: "926439540355387452",
+		id: config.managerRoleId,
 		type: "ROLE",
 		permission: true
 	}],

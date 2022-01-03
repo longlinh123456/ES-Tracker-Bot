@@ -68,7 +68,7 @@ async function trackerCycle(client: ClientWithCommands, lastNotified: Record<num
 			lastNotified[userId] ??= 0
 			let pingContent
 			if (Date.now() - lastNotified[userId] >= config.notifyCooldown)
-				pingContent = `<@&${config.roleId}>`
+				pingContent = `<@&${config.pingRoleId}>`
 			await (client.channels.cache.get(config.channelId) as TextChannel).send({
 				content: pingContent,
 				embeds: [

@@ -1,10 +1,11 @@
 import {MessageEmbed} from "discord.js"
 
 export const config = {
-	guildId: "926139718851256351",
-	clientId: "926088136310808606",
-	channelId: "926872409737420800",
-	roleId: "926871029706539069",
+	guildId: "926139718851256351", // guild where the bot is in
+	clientId: "926088136310808606", // client token
+	channelId: "926872409737420800", // channel id for target notifications
+	pingRoleId: "926871029706539069", // role id to get pinged for target notifications
+	managerRoleId: "", // role id with perms to change bot database
 	defaultEmbed() {
 		return new MessageEmbed()
 			.setColor("BLUE")
