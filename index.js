@@ -37,13 +37,7 @@ const tracker_1 = require("./tracker/tracker");
     }
     client.once("ready", () => {
         console.log("Ready!");
-        try {
-            (0, tracker_1.tracker)(client);
-        }
-        catch (error) {
-            console.log(error);
-            client.channels.cache.get(config_1.config.channelId).send({ embeds: [config_1.config.defaultEmbed().setColor("RED").setDescription("There was an error while executing this check cycle!")] });
-        }
+        (0, tracker_1.tracker)(client);
     });
     client.on("interactionCreate", async (interaction) => {
         if (!interaction.isCommand())

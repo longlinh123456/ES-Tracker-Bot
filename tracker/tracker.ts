@@ -56,8 +56,13 @@ export async function tracker(client: ClientWithCommands) {
 			lastNotified = await trackerCycle(client, lastNotified)
 		}
 		catch (error) {
-			console.log(error);
-			(client.channels.cache.get(config.channelId) as TextChannel).send({embeds: [config.defaultEmbed().setColor("RED").setDescription("There was an error while executing this check cycle!")]})
+			console.log(error)
+			try {
+				(client.channels.cache.get(config.channelId) as TextChannel).send({embeds: [config.defaultEmbed().setColor("RED").setDescription("There was an error while executing this check cycle!")]})
+			}
+			catch (error) {
+				console.log(`Failed to send error message to tracker channel, error:\n${error}`)
+			}
 		}
 	}, config.checkInterval)
 }
