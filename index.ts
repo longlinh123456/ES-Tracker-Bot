@@ -18,13 +18,7 @@ import {tracker} from "./tracker/tracker"
 
 	client.once("ready", () => {
 		console.log("Ready!")
-		try {
-			tracker(client)
-		}
-		catch (error) {
-			console.log(error);
-			(client.channels.cache.get(config.channelId) as TextChannel).send({embeds: [config.defaultEmbed().setColor("RED").setDescription("There was an error while executing this check cycle!")]})
-		}
+		tracker(client)
 	})
 
 	client.on("interactionCreate", async interaction => {

@@ -52,7 +52,13 @@ export async function tracker(client: ClientWithCommands) {
 	let lastNotified: Record<number, number> = {}
 	lastNotified = await trackerCycle(client, lastNotified)
 	setInterval(async() => {
-		lastNotified = await trackerCycle(client, lastNotified)
+		try {
+			lastNotified = await trackerCycle(client, lastNotified)
+		}
+		catch (error) {
+			console.log(error);
+			(client.channels.cache.get(config.channelId) as TextChannel).send({embeds: [config.defaultEmbed().setColor("RED").setDescription("There was an error while executing this check cycle!")]})
+		}
 	}, config.checkInterval)
 }
 
