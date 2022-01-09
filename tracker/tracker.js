@@ -31,14 +31,23 @@ const store_2 = require("./idDescriptionStore/store");
 const config_1 = require("../config");
 if (process.env.COOKIE)
     noblox_js_1.default.setCookie(process.env.COOKIE);
+noblox_js_1.default.setOptions({
+    "maxThreads": 100,
+    "timeout": 20000,
+    "thumbnail": {
+        "maxRetries": 3,
+        "retryDelay": 1000,
+        "failedUrl": {
+            "pending": "",
+            "blocked": ""
+        },
+    }
+});
 async function getServers(gameId) {
     const servers = [];
     let currentServerIndex = 0;
     do {
-        const currentServers = await tsRetry.retryAsync(() => noblox_js_1.default.getGameInstances(gameId, currentServerIndex), {
-            delay: 1500,
-            maxTry: 5
-        });
+        const currentServers = await noblox_js_1.default.getGameInstances(gameId, currentServerIndex);
         if (currentServers.Collection.length < 10) {
             break;
         }
@@ -110,19 +119,18 @@ async function trackerCycle(client, lastNotified) {
                         .setTitle(`Target ${await tsRetry.retryAsync(() => noblox_js_1.default.getUsernameFromId(parseInt(userId)), {
                         delay: 1000,
                         maxTry: 5
-                    })} at Tier ${idDB[userId]} (${descriptionDB[idDB[userId]]}) detected!`)
-                        .setURL(`https://www.roblox.com/users/${userId}/profile`)
+                    })} at Tier ${idDB[userId]} (${descriptionDB[idDB[userId]] || "no description set"}) detected!`)
                         .setImage((await tsRetry.retryAsync(() => noblox_js_1.default.getPlayerThumbnail(parseInt(userId), 180, "png", false, "body"), {
                         delay: 1000,
                         maxTry: 5
                     }))[0].imageUrl)
-                        .addFields({ name: "User ID", value: userId, inline: true }, {
-                        name: "Account Age", value: `${String(await tsRetry.retryAsync(async () => (await noblox_js_1.default.getPlayerInfo(parseInt(userId))).age, {
+                        .addFields({ name: "Profile", value: `[click here](https://www.roblox.com/users/${userId}/profile)`, inline: true }, { name: "Gamepasses", value: `[click here](https://www.roblox.com/users/${userId}/inventory#!/game-passes)`, inline: true }, { name: "Server Join Link", value: `[click here](https://www.roblox.com/home?placeId=${config_1.config.gameId}&gameId=${activePlayersAndServerIds[userId]})`, inline: true }, { name: "User ID", value: userId, inline: false }, {
+                        name: "Account Age", value: `${(await tsRetry.retryAsync(async () => (await noblox_js_1.default.getPlayerInfo(parseInt(userId))).age, {
                             delay: 1000,
                             maxTry: 5
                         }))} days`,
-                        inline: true
-                    }, { name: "Gamepasses", value: `https://www.roblox.com/users/${userId}/inventory#!/game-passes`, inline: true }, { name: "Server Join Link", value: `https://www.roblox.com/home?placeId=${config_1.config.gameId}&gameId=${activePlayersAndServerIds[userId]}` })
+                        inline: false
+                    })
                 ]
             });
             lastNotified[userId] = Date.now();

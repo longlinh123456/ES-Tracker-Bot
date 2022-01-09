@@ -1,5 +1,5 @@
 import * as tsRetry from "ts-retry"
-import noblox, {GameInstance} from "noblox.js"
+import noblox, {GameInstance, NobloxOptions} from "noblox.js"
 import _ from "lodash"
 import {ClientWithCommands} from "../typings/client"
 import {IDStore} from "./idStore/store"
@@ -8,14 +8,23 @@ import {config} from "../config"
 import {TextChannel} from "discord.js"
 import {ReturnedTarget} from "../typings/target"
 if (process.env.COOKIE) noblox.setCookie(process.env.COOKIE)
+noblox.setOptions({
+	"maxThreads": 100,
+	"timeout": 20000,
+	"thumbnail": {
+		"maxRetries": 3,
+		"retryDelay": 1000,
+		"failedUrl": {
+			"pending": "",
+			"blocked": ""
+		},
+	}
+} as unknown as NobloxOptions)
 async function getServers(gameId: number): Promise<GameInstance[]> {
 	const servers: GameInstance[] = []
 	let currentServerIndex = 0
 	do {
-		const currentServers = await tsRetry.retryAsync(() => noblox.getGameInstances(gameId, currentServerIndex), {
-			delay: 1500,
-			maxTry: 5
-		})
+		const currentServers = await noblox.getGameInstances(gameId, currentServerIndex)
 		if (currentServers.Collection.length < 10) {
 			break
 		}
@@ -87,23 +96,23 @@ async function trackerCycle(client: ClientWithCommands, lastNotified: Record<num
 						.setTitle(`Target ${await tsRetry.retryAsync(() => noblox.getUsernameFromId(parseInt(userId)), {
 							delay: 1000,
 							maxTry: 5
-						})} at Tier ${idDB[userId]} (${descriptionDB[idDB[userId]]}) detected!`)
-						.setURL(`https://www.roblox.com/users/${userId}/profile`)
+						})} at Tier ${idDB[userId]} (${descriptionDB[idDB[userId]] || "no description set"}) detected!`)
 						.setImage((await tsRetry.retryAsync(() => noblox.getPlayerThumbnail(parseInt(userId), 180, "png", false, "body"), {
 							delay: 1000,
 							maxTry: 5
 						}))[0].imageUrl as string)
 						.addFields(
-							{name: "User ID", value: userId, inline: true},
+							{name: "Profile", value: `[click here](https://www.roblox.com/users/${userId}/profile)`, inline: true},
+							{name: "Gamepasses", value: `[click here](https://www.roblox.com/users/${userId}/inventory#!/game-passes)`, inline: true},
+							{name: "Server Join Link", value: `[click here](https://www.roblox.com/home?placeId=${config.gameId}&gameId=${activePlayersAndServerIds[userId]})`, inline: true},
+							{name: "User ID", value: userId, inline: false},
 							{
-								name: "Account Age", value: `${String(await tsRetry.retryAsync(async() => (await noblox.getPlayerInfo(parseInt(userId))).age, {
+								name: "Account Age", value: `${(await tsRetry.retryAsync(async() => (await noblox.getPlayerInfo(parseInt(userId))).age, {
 									delay: 1000,
 									maxTry: 5
-								}) as number)} days`,
-								inline: true
-							},
-							{name: "Gamepasses", value: `https://www.roblox.com/users/${userId}/inventory#!/game-passes`, inline: true},
-							{name: "Server Join Link", value: `https://www.roblox.com/home?placeId=${config.gameId}&gameId=${activePlayersAndServerIds[userId]}`}
+								}))} days`,
+								inline: false
+							}
 						)
 				]
 			})
