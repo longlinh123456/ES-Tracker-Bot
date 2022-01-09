@@ -18,21 +18,19 @@ class IDStore {
         });
     }
     static async remove(userId) {
-        if (await this.get(userId))
-            storage.remove(userId);
-        else
+        if (!storage.remove(userId))
             throw new Error("You can't remove a non-existent target!");
     }
     static async get(userId) {
         if (typeof userId === "number") {
             const target = storage.get(userId);
-            return {
+            return target ? {
                 userId: target.id,
                 tier: target.tier
-            };
+            } : null;
         }
         else
-            return;
+            return null;
     }
     static async getAll() {
         const db = storage.all();

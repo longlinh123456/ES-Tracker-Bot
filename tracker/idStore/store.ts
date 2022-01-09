@@ -13,18 +13,17 @@ export class IDStore {
 		})
 	}
 	static async remove(userId: number): Promise<void> {
-		if (await this.get(userId)) storage.remove(userId)
-		else throw new Error("You can't remove a non-existent target!")
+		if (!storage.remove(userId)) throw new Error("You can't remove a non-existent target!")
 	}
-	static async get(userId?: number): Promise<void | ReturnedTarget> {
+	static async get(userId?: number): Promise<null | ReturnedTarget> {
 		if (typeof userId === "number") {
 			const target = storage.get(userId)
-			return {
+			return target ? {
 				userId: target.id,
 				tier: target.tier
-			}
+			} : null
 		}
-		else return
+		else return null
 	}
 	static async getAll(): Promise<ReturnedTarget[]> {
 		const db: Record<string, Target> = storage.all()

@@ -34,11 +34,11 @@ import {tracker} from "./tracker/tracker"
 		catch (error) {
 			console.error(error)
 			if (interaction.replied) {
-				return interaction.reply({embeds: [config.defaultEmbed().setColor("RED").setDescription("There was an error while executing this command!")], ephemeral: true})
-			}
-			else {
 				await interaction.editReply({embeds: [config.defaultEmbed().setColor("RED").setDescription("There was an error while executing this command!")]})
 				return
+			}
+			else {
+				return interaction.reply({embeds: [config.defaultEmbed().setColor("RED").setDescription("There was an error while executing this command!")], ephemeral: true})
 			}
 		}
 	})

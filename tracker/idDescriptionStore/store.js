@@ -18,17 +18,13 @@ class DescriptionStore {
         });
     }
     static async remove(tier) {
-        if (await this.get(tier))
-            storage.remove(tier);
-        else
+        if (!storage.remove(tier))
             throw new Error("You can't remove a non-existent description!");
     }
     static async get(tier) {
         if (typeof tier === "number") {
-            return storage.get(tier).description;
+            return storage.get(tier)?.description || null;
         }
-        else
-            return;
     }
     static async getAll() {
         const returnedDescriptions = {};
