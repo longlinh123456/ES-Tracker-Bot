@@ -21,7 +21,7 @@ class DescriptionStore {
         if (await this.get(tier))
             storage.remove(tier);
         else
-            throw "You can't remove a non-existent description!";
+            throw new Error("You can't remove a non-existent description!");
     }
     static async get(tier) {
         if (typeof tier === "number") {

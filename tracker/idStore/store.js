@@ -21,7 +21,7 @@ class IDStore {
         if (await this.get(userId))
             storage.remove(userId);
         else
-            throw "You can't remove a non-existent target!";
+            throw new Error("You can't remove a non-existent target!");
     }
     static async get(userId) {
         if (typeof userId === "number") {

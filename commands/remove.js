@@ -42,8 +42,8 @@ exports.command = {
                 await store_1.IDStore.remove(targetId);
                 return interaction.reply(config_1.config.defaultEmbedMessage(`Target ${targetId} removed from the tracker!`, true));
             }
-            catch (message) {
-                return interaction.reply(config_1.config.defaultEmbedMessage(message, true));
+            catch (error) {
+                return interaction.reply(config_1.config.defaultEmbedMessage(error.message, true));
             }
         }
         else if (interaction.options.getSubcommand() === "description") {
@@ -57,8 +57,8 @@ exports.command = {
                 await store_2.DescriptionStore.remove(tier);
                 return interaction.reply(config_1.config.defaultEmbedMessage(`Description of tier ${tier} removed from the tracker!`, true));
             }
-            catch (message) {
-                return interaction.reply(config_1.config.defaultEmbedMessage(message, true));
+            catch (error) {
+                return interaction.reply(config_1.config.defaultEmbedMessage(error.message, true));
             }
         }
     }
