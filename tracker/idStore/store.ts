@@ -14,7 +14,7 @@ export class IDStore {
 	}
 	static async remove(userId: number): Promise<void> {
 		if (await this.get(userId)) storage.remove(userId)
-		else throw "You can't remove a non-existent target!"
+		else throw new Error("You can't remove a non-existent target!")
 	}
 	static async get(userId?: number): Promise<void | ReturnedTarget> {
 		if (typeof userId === "number") {

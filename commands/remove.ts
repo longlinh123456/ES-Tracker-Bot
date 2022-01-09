@@ -44,8 +44,8 @@ export const command: Command = {
 				await IDStore.remove(targetId)
 				return interaction.reply(config.defaultEmbedMessage(`Target ${targetId} removed from the tracker!`, true))
 			}
-			catch (message) {
-				return interaction.reply(config.defaultEmbedMessage(message as string, true))
+			catch (error: any) {
+				return interaction.reply(config.defaultEmbedMessage(error.message, true))
 			}
 		}
 		else if (interaction.options.getSubcommand() === "description") {
@@ -58,8 +58,8 @@ export const command: Command = {
 				await DescriptionStore.remove(tier)
 				return interaction.reply(config.defaultEmbedMessage(`Description of tier ${tier} removed from the tracker!`, true))
 			}
-			catch (message) {
-				return interaction.reply(config.defaultEmbedMessage(message as string, true))
+			catch (error: any) {
+				return interaction.reply(config.defaultEmbedMessage(error.message, true))
 			}
 		}
 	}
